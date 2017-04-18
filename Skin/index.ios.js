@@ -10,15 +10,18 @@ import {
 	StyleSheet,
 	Text,
 	Button,
-	View
+	View,
+	SectionList,
+	ListItem,
+	H1
 } from 'react-native';
 
 class DateSelector extends Component {
-	
+
 	constructor() {
 		super();
 	}
-	
+
 	render() {
 		return (
 				<View style={dateSelectorStyles.dateSelector}>
@@ -31,7 +34,7 @@ class DateSelector extends Component {
 }
 
 const dateSelectorStyles = StyleSheet.create({
-											 
+
 											 dateSelector: {
 												height: 40,
 												flexDirection: 'row',
@@ -39,44 +42,64 @@ const dateSelectorStyles = StyleSheet.create({
 												backgroundColor: 'linen',
 												alignSelf: 'stretch',
 											 },
-											 
+
 											 currentDate: {
 												alignSelf: 'center'
 											 }
 })
 
 export default class Skin extends Component {
-	
+
 	constructor() {
 		super();
 		this.state = {
 		currentDate: new Date()
 		}
 	}
-	
+
 	render() {
 		return (
 				<View style={styles.container}>
-				<DateSelector	currentDate={this.state.currentDate}
+					<DateSelector	currentDate={this.state.currentDate}
 									onPrevious={() => this.handlePrevious()}
 									onNext={() => this.handleNext()}/>
+					<SectionList renderItem={({item}) => <ListItem title={item.title}/>}
+  					renderSectionHeader={({section}) => <H1 title={section.key} />}
+  					sections={[
+    					{data: [
+								{title: 'Cleansers', text: 'Section s1', key: '0'},
+							], key: '0'},
+    					{data: [
+								{title: 'Actives', text: 'Section s2', key: '1'},
+							], key: '1'},
+    					{data: [
+								{title: 'Toners', text: 'Section s3', key: '2'},
+							], key: '2'},
+							{data: [
+								{title: 'Humectants', text: 'Section s4', key: '3'},
+							], key: '3'},
+							{data: [
+								{title: 'Occlusives', text: 'Section s5', key: '4'},
+							], key: '4'},
+						]}
+					/>
 				</View>
 		);
 	}
-	
+
 	handlePrevious() {
 		var previousDate = new Date(this.state.currentDate.valueOf())
 		previousDate.setDate(previousDate.getDate() - 1)
-		
+
 		this.setState({
 					  currentDate: previousDate
 		})
 	}
-	
+
 	handleNext() {
 		var previousDate = new Date(this.state.currentDate.valueOf())
 		previousDate.setDate(previousDate.getDate() + 1)
-		
+
 		this.setState({
 					  currentDate: previousDate
 					  })
@@ -84,14 +107,13 @@ export default class Skin extends Component {
 }
 
 const styles = StyleSheet.create({
-								 
+
 								 container: {
 									 flex: 1,
 									 paddingTop: 15,
 									 backgroundColor: 'linen',
 								 },
-								 
+
 								 });
 
 AppRegistry.registerComponent('Skin', () => Skin);
-
