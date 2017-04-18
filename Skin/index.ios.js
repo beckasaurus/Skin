@@ -12,8 +12,8 @@ import {
 	Button,
 	View,
 	SectionList,
-	ListItem,
-	H1
+	H1,
+	TouchableHighlight
 } from 'react-native';
 
 class DateSelector extends Component {
@@ -48,12 +48,22 @@ const dateSelectorStyles = StyleSheet.create({
 											 }
 })
 
+class SectionHeaderButton extends Component {
+	render() {
+		return (
+			<TouchableHighlight onPress={() => this.props.onButtonPress()} style={styles.sectionHeaderButton}>
+				<Text style={styles.sectionHeaderButtonText}>+</Text>
+    		</TouchableHighlight>
+		)
+	}
+}
+
 export default class Skin extends Component {
 
 	constructor() {
 		super();
 		this.state = {
-		currentDate: new Date()
+			currentDate: new Date()			
 		}
 	}
 
@@ -61,30 +71,48 @@ export default class Skin extends Component {
 		return (
 				<View style={styles.container}>
 					<DateSelector	currentDate={this.state.currentDate}
-									onPrevious={() => this.handlePrevious()}
-									onNext={() => this.handleNext()}/>
-					<SectionList renderItem={({item}) => <ListItem title={item.title}/>}
-  					renderSectionHeader={({section}) => <H1 title={section.key} />}
+									onPrevious={this.handlePrevious}
+									onNext={this.handleNext}/>
+					
+					<SectionList renderItem={this.renderItem}
+  					renderSectionHeader={this.renderSectionHeader}
   					sections={[
     					{data: [
-								{title: 'Cleansers', text: 'Section s1', key: '0'},
-							], key: '0'},
+								{title: 'Heimish All Clean Balm', key: '0'},
+							], key: 'Cleansers'},
     					{data: [
-								{title: 'Actives', text: 'Section s2', key: '1'},
-							], key: '1'},
+								{title: 'Paula\'s Choice AHA Gel', key: '0'},
+							], key: 'Actives'},
     					{data: [
-								{title: 'Toners', text: 'Section s3', key: '2'},
-							], key: '2'},
+								{title: 'CosRx Centella Water Alcohol-Free Toner', key: '0'},
+							], key: 'Toners'},
 							{data: [
-								{title: 'Humectants', text: 'Section s4', key: '3'},
-							], key: '3'},
+								{title: 'CosRx Oil-Free Lotion', key: '0'},
+							], key: 'Humectants'},
 							{data: [
-								{title: 'Occlusives', text: 'Section s5', key: '4'},
-							], key: '4'},
+								{title: 'Foxbrim Rosehip Seed Oil', key: '0'},
+							], key: 'Occlusives'},
 						]}
 					/>
 				</View>
 		);
+	}
+	
+	renderSectionHeader({section}) {
+		return (
+			<View style={styles.sectionHeader}>
+				<Text style={styles.sectionHeaderText}>{section.key}</Text>
+				<SectionHeaderButton onButtonPress={this.handleButtonPress}/>
+			</View>
+			)
+	}
+	
+	renderItem({item, index}) {
+		return <Text>{item.title}</Text>
+	}	
+	
+	handleButtonPress() {
+		alert('press');
 	}
 
 	handlePrevious() {
@@ -113,6 +141,36 @@ const styles = StyleSheet.create({
 									 paddingTop: 15,
 									 backgroundColor: 'linen',
 								 },
+								 
+								 sectionHeader: {
+								 	backgroundColor: 'rosybrown',
+								 	height: 35,
+								 	flexDirection: 'row',
+								 	alignItems: 'center',
+								 	justifyContent: 'space-between',
+								 	marginTop: 10,
+								 	marginBottom: 10
+								 },
+								 
+								 sectionHeaderText: {
+								 	color: 'linen',
+								 	marginLeft: 10
+								 },
+								 
+								 sectionHeaderButton: {
+								 	height: 30,
+								 	width: 30,	
+								 	marginRight: 10,
+								 	justifyContent: 'center',		 	
+								 },
+						
+								 sectionHeaderButtonText: {
+								 	color: 'linen',
+								 	alignSelf: 'center',
+								 	fontSize: 20,
+								 	justifyContent: 'center',
+								 	alignItems: 'center'
+								 }
 
 								 });
 
