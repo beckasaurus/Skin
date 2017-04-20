@@ -25,9 +25,9 @@ class DateSelector extends Component {
 	render() {
 		return (
 				<View style={dateSelectorStyles.dateSelector}>
-					<Button title='Previous' onPress={() => this.props.onPrevious()}/>
+					<Button color='rosybrown' title='Previous' onPress={() => this.props.onPrevious()}/>
 					<Text style={dateSelectorStyles.currentDate}>{this.props.currentDate.toDateString()}</Text>
-					<Button title='Next' onPress={() => this.props.onNext()}/>
+					<Button color='rosybrown' title='Next' onPress={() => this.props.onNext()}/>
 				</View>
 				);
 	}
@@ -39,13 +39,12 @@ const dateSelectorStyles = StyleSheet.create({
 												height: 40,
 												flexDirection: 'row',
 												justifyContent: 'space-between',
-												backgroundColor: 'linen',
 												alignSelf: 'stretch',
 											 },
 
 											 currentDate: {
 												alignSelf: 'center'
-											 }
+											},
 })
 
 class SectionHeaderButton extends Component {
@@ -63,7 +62,7 @@ export default class Skin extends Component {
 	constructor() {
 		super();
 		this.state = {
-			currentDate: new Date()			
+			currentDate: new Date()
 		}
 	}
 
@@ -71,11 +70,13 @@ export default class Skin extends Component {
 		return (
 				<View style={styles.container}>
 					<DateSelector	currentDate={this.state.currentDate}
-									onPrevious={this.handlePrevious}
-									onNext={this.handleNext}/>
-					
-					<SectionList renderItem={this.renderItem}
-  					renderSectionHeader={this.renderSectionHeader}
+									onPrevious={this.handlePrevious.bind(this)}
+									onNext={this.handleNext.bind(this)}/>
+
+					<SectionList
+						SectionSeparatorComponent={this.renderSectionSeparator}
+						renderItem={this.renderItem}
+  					renderSectionHeader={this.renderSectionHeader.bind(this)}
   					sections={[
     					{data: [
 								{title: 'Heimish All Clean Balm', key: '0'},
@@ -97,7 +98,13 @@ export default class Skin extends Component {
 				</View>
 		);
 	}
-	
+
+	renderSectionSeparator() {
+		return (
+			<View style={styles.sectionSeparator}></View>
+		)
+	}
+
 	renderSectionHeader({section}) {
 		return (
 			<View style={styles.sectionHeader}>
@@ -106,13 +113,13 @@ export default class Skin extends Component {
 			</View>
 			)
 	}
-	
+
 	renderItem({item, index}) {
-		return <Text>{item.title}</Text>
-	}	
-	
+		return <Text style={styles.sectionItem}>{item.title}</Text>
+	}
+
 	handleButtonPress() {
-		alert('press');
+		alert('cute');
 	}
 
 	handlePrevious() {
@@ -141,36 +148,47 @@ const styles = StyleSheet.create({
 									 paddingTop: 15,
 									 backgroundColor: 'linen',
 								 },
-								 
+
+								 sectionSeparator: {
+									 backgroundColor: '#a0a0a0',
+									 height: 5
+								 },
+
 								 sectionHeader: {
 								 	backgroundColor: 'rosybrown',
 								 	height: 35,
 								 	flexDirection: 'row',
 								 	alignItems: 'center',
 								 	justifyContent: 'space-between',
-								 	marginTop: 10,
-								 	marginBottom: 10
 								 },
-								 
+
 								 sectionHeaderText: {
-								 	color: 'linen',
-								 	marginLeft: 10
+										color: 'mistyrose',
+								 		marginLeft: 10
 								 },
-								 
+
 								 sectionHeaderButton: {
 								 	height: 30,
-								 	width: 30,	
+								 	width: 30,
 								 	marginRight: 10,
-								 	justifyContent: 'center',		 	
+								 	justifyContent: 'center',
 								 },
-						
+
 								 sectionHeaderButtonText: {
-								 	color: 'linen',
+										color: 'mistyrose',
 								 	alignSelf: 'center',
 								 	fontSize: 20,
 								 	justifyContent: 'center',
 								 	alignItems: 'center'
-								 }
+								},
+
+								sectionItem: {
+									height: 20,
+									backgroundColor: 'mistyrose',
+									color: '#474747',
+									borderBottomColor: 'rosybrown',
+									borderBottomWidth: 1,
+								}
 
 								 });
 
