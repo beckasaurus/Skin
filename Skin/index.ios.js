@@ -5,6 +5,7 @@
  */
 
 import React, { Component } from 'react';
+
 import {
 	AppRegistry,
 	StyleSheet,
@@ -16,36 +17,8 @@ import {
 	TouchableHighlight
 } from 'react-native';
 
-class DateSelector extends Component {
-
-	constructor() {
-		super();
-	}
-
-	render() {
-		return (
-				<View style={dateSelectorStyles.dateSelector}>
-					<Button color='rosybrown' title='Previous' onPress={() => this.props.onPrevious()}/>
-					<Text style={dateSelectorStyles.currentDate}>{this.props.currentDate.toDateString()}</Text>
-					<Button color='rosybrown' title='Next' onPress={() => this.props.onNext()}/>
-				</View>
-				);
-	}
-}
-
-const dateSelectorStyles = StyleSheet.create({
-
-											 dateSelector: {
-												height: 40,
-												flexDirection: 'row',
-												justifyContent: 'space-between',
-												alignSelf: 'stretch',
-											 },
-
-											 currentDate: {
-												alignSelf: 'center'
-											},
-})
+import DateSelector from './components/dateSelector.js';
+import ProductList from './components/productList.js';
 
 class SectionHeaderButton extends Component {
 	render() {
@@ -73,49 +46,9 @@ export default class Skin extends Component {
 									onPrevious={this.handlePrevious.bind(this)}
 									onNext={this.handleNext.bind(this)}/>
 
-					<SectionList
-						SectionSeparatorComponent={this.renderSectionSeparator}
-						renderItem={this.renderItem}
-  					renderSectionHeader={this.renderSectionHeader.bind(this)}
-  					sections={[
-    					{data: [
-								{title: 'Heimish All Clean Balm', key: '0'},
-							], key: 'Cleansers'},
-    					{data: [
-								{title: 'Paula\'s Choice AHA Gel', key: '0'},
-							], key: 'Actives'},
-    					{data: [
-								{title: 'CosRx Centella Water Alcohol-Free Toner', key: '0'},
-							], key: 'Toners'},
-							{data: [
-								{title: 'CosRx Oil-Free Lotion', key: '0'},
-							], key: 'Humectants'},
-							{data: [
-								{title: 'Foxbrim Rosehip Seed Oil', key: '0'},
-							], key: 'Occlusives'},
-						]}
-					/>
+					<ProductList/>
 				</View>
 		);
-	}
-
-	renderSectionSeparator() {
-		return (
-			<View style={styles.sectionSeparator}></View>
-		)
-	}
-
-	renderSectionHeader({section}) {
-		return (
-			<View style={styles.sectionHeader}>
-				<Text style={styles.sectionHeaderText}>{section.key}</Text>
-				<SectionHeaderButton onButtonPress={this.handleButtonPress}/>
-			</View>
-			)
-	}
-
-	renderItem({item, index}) {
-		return <Text style={styles.sectionItem}>{item.title}</Text>
 	}
 
 	handleButtonPress() {
@@ -146,49 +79,7 @@ const styles = StyleSheet.create({
 								 container: {
 									 flex: 1,
 									 paddingTop: 15,
-									 backgroundColor: 'linen',
 								 },
-
-								 sectionSeparator: {
-									 backgroundColor: '#a0a0a0',
-									 height: 5
-								 },
-
-								 sectionHeader: {
-								 	backgroundColor: 'rosybrown',
-								 	height: 35,
-								 	flexDirection: 'row',
-								 	alignItems: 'center',
-								 	justifyContent: 'space-between',
-								 },
-
-								 sectionHeaderText: {
-										color: 'mistyrose',
-								 		marginLeft: 10
-								 },
-
-								 sectionHeaderButton: {
-								 	height: 30,
-								 	width: 30,
-								 	marginRight: 10,
-								 	justifyContent: 'center',
-								 },
-
-								 sectionHeaderButtonText: {
-										color: 'mistyrose',
-								 	alignSelf: 'center',
-								 	fontSize: 20,
-								 	justifyContent: 'center',
-								 	alignItems: 'center'
-								},
-
-								sectionItem: {
-									height: 20,
-									backgroundColor: 'mistyrose',
-									color: '#474747',
-									borderBottomColor: 'rosybrown',
-									borderBottomWidth: 1,
-								}
 
 								 });
 
